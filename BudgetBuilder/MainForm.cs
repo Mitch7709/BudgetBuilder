@@ -44,13 +44,9 @@ namespace BudgetBuilder
         {
             mainPanel.Controls.Clear();
 
-            Label lbl = new Label();
-            lbl.Text = "Transactions";
-            lbl.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            lbl.Location = new Point(20, 20);
-            lbl.AutoSize = true;
-
-            mainPanel.Controls.Add(lbl);
+            UserControl transView = new TransactionView();
+            transView.Dock = DockStyle.Fill;
+            mainPanel.Controls.Add(transView);
         }        
     }
 }

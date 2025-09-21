@@ -34,7 +34,7 @@ namespace BudgetBuilder.UserControlViews
             tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            tableLayout.Size = new Size(760, 627);
+            //tableLayout.Size = new Size(760, 627);
 
             FlowLayoutPanel headerPanel = new FlowLayoutPanel();
             headerPanel.Dock = DockStyle.Fill;
@@ -46,7 +46,7 @@ namespace BudgetBuilder.UserControlViews
             summaryContainer.Dock = DockStyle.Fill;
             summaryContainer.FlowDirection = FlowDirection.LeftToRight;
             summaryContainer.WrapContents = false;
-            summaryContainer.Padding = new Padding(10);
+            summaryContainer.Padding = new Padding(40, 10, 10, 10);
 
             summaryContainer.Controls.Add(CreateSummaryPanel($"Total Income: ${_incomeTotal}", Color.LightGreen));
             summaryContainer.Controls.Add(CreateSummaryPanel($"Total Expenses: ${_expenseTotal}", Color.LightCoral));
