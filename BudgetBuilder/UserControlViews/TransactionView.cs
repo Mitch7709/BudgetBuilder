@@ -38,7 +38,7 @@ namespace BudgetBuilder.UserControlViews
             controlPanel.Dock = DockStyle.Fill;
             controlPanel.FlowDirection = FlowDirection.LeftToRight;
             controlPanel.WrapContents = false;
-            controlPanel.Padding = new Padding(40, 10, 10, 10);
+            controlPanel.Padding = new Padding(20, 10, 10, 10);
 
             controlPanel.Controls.Add(CreateCategoryControl());
             controlPanel.Controls.Add(CreateControlLabel("From:"));
@@ -96,10 +96,13 @@ namespace BudgetBuilder.UserControlViews
             panel.Size = new Size(50, 30);
 
             Label lbl = new Label();
-            lbl.AutoSize = true;
+            lbl.Dock = DockStyle.Fill;
+            lbl.AutoSize = false;
+            lbl.Width = 50;
+            lbl.TextAlign = ContentAlignment.TopRight;
             lbl.Text = text;
             lbl.Font = new Font("Segoe UI", 10, FontStyle.Regular);
-            lbl.AutoSize = true;
+            
             panel.Controls.Add(lbl);
             return panel;
         }
@@ -107,13 +110,15 @@ namespace BudgetBuilder.UserControlViews
         private Panel CreateDateSearchControl(string text)
         {
             Panel panel = new Panel();
-            panel.Margin = new Padding(0, 10, 5, 10);
+            panel.Margin = new Padding(0, 10, 10, 10);
             panel.Size = new Size(80, 30);
 
             DateTimePicker datePicker = new DateTimePicker();
+            datePicker.Dock = DockStyle.Fill;
             datePicker.Format = DateTimePickerFormat.Short;
             datePicker.Width = 80;
             datePicker.CustomFormat = text;
+            datePicker.ShowCheckBox = true;            
             datePicker.ValueChanged += (s, e) =>
             {
                 datePicker.Format = DateTimePickerFormat.Short;
@@ -130,6 +135,7 @@ namespace BudgetBuilder.UserControlViews
             panel.Size = new Size(80, 30);
             
             TextBox searchText = new TextBox();
+            searchText.Dock = DockStyle.Fill;
             searchText.Width = 80;
             searchText.PlaceholderText = "Search";
 
