@@ -12,14 +12,20 @@ namespace BudgetBuilder.Transactions
         public string Description { get; set; }
         public double Amount { get; set; }
         public string Category { get; set; }
-        public bool IsIncome { get; set; }
-        public Transaction(DateTime date, string description, double amount, string category, bool isIncome)
+        public TransactionType Type { get; set; }
+        public Transaction(DateTime date, string description, double amount, string category, TransactionType type)
         {
             Date = date;
             Description = description;
             Amount = amount;
             Category = category;
-            IsIncome = isIncome;
+            Type = type;
+        }
+
+        public enum TransactionType
+        {
+            Income,
+            Expense
         }
     }
 }

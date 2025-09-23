@@ -32,9 +32,7 @@
             transBtn = new Button();
             dashBtn = new Button();
             mainPanel = new Panel();
-            dateTimePicker1 = new DateTimePicker();
             sideBar.SuspendLayout();
-            mainPanel.SuspendLayout();
             SuspendLayout();
             // 
             // sideBar
@@ -77,21 +75,11 @@
             // 
             mainPanel.BackColor = Color.WhiteSmoke;
             mainPanel.BorderStyle = BorderStyle.FixedSingle;
-            mainPanel.Controls.Add(dateTimePicker1);
             mainPanel.Dock = DockStyle.Fill;
             mainPanel.Location = new Point(150, 0);
             mainPanel.Name = "mainPanel";
             mainPanel.Size = new Size(762, 629);
             mainPanel.TabIndex = 14;
-            // 
-            // dateTimePicker1
-            // 
-            dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(299, 192);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(95, 23);
-            dateTimePicker1.TabIndex = 0;
-            dateTimePicker1.Value = new DateTime(2025, 9, 10, 0, 0, 0, 0);
             // 
             // MainForm
             // 
@@ -103,7 +91,6 @@
             Name = "MainForm";
             Text = "Budget Builder";
             sideBar.ResumeLayout(false);
-            mainPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -112,6 +99,5 @@
         private Button dashBtn;
         private Panel mainPanel;
         private Button transBtn;
-        private DateTimePicker dateTimePicker1;
     }
 }

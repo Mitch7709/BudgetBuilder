@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetBuilder.Transactions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static BudgetBuilder.Transactions.Transaction;
 
 namespace BudgetBuilder.UserControlViews
 {
@@ -14,134 +16,27 @@ namespace BudgetBuilder.UserControlViews
     {
         public TransactionView()
         {
-            InitializeLayout();
-        }
+            InitializeComponent();
 
-        private void InitializeLayout()
-        {
-            TableLayoutPanel tableLayout = new TableLayoutPanel();
-            tableLayout.Dock = DockStyle.Fill;
-            tableLayout.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            tableLayout.RowCount = 4;
-            tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
-            tableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 10));
+            CategoryComboBox.Items.AddRange(new string[] { "Category", "Income", "Rent", "Food", "Utilities" });
 
-            FlowLayoutPanel headerPanel = new FlowLayoutPanel();
-            headerPanel.Dock = DockStyle.Fill;
-            headerPanel.FlowDirection = FlowDirection.LeftToRight;
-            headerPanel.Padding = new Padding(10);
-            headerPanel.Controls.Add(CreateTransactionLabel());
-
-            FlowLayoutPanel controlPanel = new FlowLayoutPanel();
-            controlPanel.Dock = DockStyle.Fill;
-            controlPanel.FlowDirection = FlowDirection.LeftToRight;
-            controlPanel.WrapContents = false;
-            controlPanel.Padding = new Padding(20, 10, 10, 10);
-
-            controlPanel.Controls.Add(CreateCategoryControl());
-            controlPanel.Controls.Add(CreateControlLabel("From:"));
-            controlPanel.Controls.Add(CreateDateSearchControl(" From "));
-            controlPanel.Controls.Add(CreateControlLabel("To:"));
-            controlPanel.Controls.Add(CreateDateSearchControl(" To "));
-            controlPanel.Controls.Add(CreateSearchControl());
-
-            tableLayout.Controls.Add(headerPanel, 0, 0);
-            tableLayout.Controls.Add(controlPanel, 0, 1);
-            this.Controls.Add(tableLayout);
-        }
-
-        private Panel CreateTransactionLabel()
-        {             
-            Panel panel = new Panel();
-
-            Label lbl = new Label();
-            lbl.Text = "Transactions";
-            lbl.Font = new Font("Segoe UI", 14, FontStyle.Bold);
-            lbl.AutoSize = true;
-
-            panel.Controls.Add(lbl);
-            return panel;
-        }
-
-        private Panel CreateCategoryControl()
-        {
-            Panel panel = new Panel();
-            panel.Margin = new Padding(10);
-            panel.Size = new Size(80, 30);
-
-            ComboBox categoryComboBox = new ComboBox();
-            categoryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            categoryComboBox.Items.AddRange(new string[] {"Category", "Income", "Expense" });
-            categoryComboBox.SelectedIndex = 0;
-            categoryComboBox.Width = 80;
-
-            categoryComboBox.DropDown += (s, e) =>
+            var sampleData = new List<Transaction>
             {
-                if (categoryComboBox.Items.Contains("Category"))
-                {
-                    categoryComboBox.Items.Remove("Category");
-                }
+                new Transaction(new DateTime(2024, 1, 5), "Grocery Store", -150.75, "Food", TransactionType.Expense),
+                new Transaction(new DateTime(2024, 1, 10), "Salary", 3000.00, "Income", TransactionType.Income),
+                new Transaction(new DateTime(2024, 1, 15), "Electric Bill", -75.50, "Utilities", TransactionType.Expense),
+                new Transaction(new DateTime(2024, 1, 20), "Restaurant", -60.00, "Food", TransactionType.Expense),
+                new Transaction(new DateTime(2024, 1, 25), "Freelance Project", 500.00, "Income", TransactionType.Income),
+                new Transaction(new DateTime(2024, 1, 28), "Internet Bill", -45.00, "Utilities", TransactionType.Expense),
+                new Transaction(new DateTime(2024, 2, 3), "Grocery Store", -130.20, "Food", TransactionType.Expense),
+                new Transaction(new DateTime(2024, 2, 10), "Salary", 3000.00, "Income", TransactionType.Income),
+                new Transaction(new DateTime(2024, 2, 14), "Valentine's Gift", -80.00, "Gifts", TransactionType.Expense),
+                new Transaction(new DateTime(2024, 2, 18), "Electric Bill", -70.25, "Utilities", TransactionType.Expense),
+                new Transaction(new DateTime(2024, 2, 22), "Restaurant", -55.00, "Food", TransactionType.Expense),
+                new Transaction(new DateTime(2024, 2, 27), "Freelance Project", 600.00, "Income", TransactionType.Income),
+                new Transaction(new DateTime(2024, 2, 29), "Internet Bill", -50.00, "Utilities", TransactionType.Expense)
             };
-
-            panel.Controls.Add(categoryComboBox);
-            return panel;
-        }
-
-        private Panel CreateControlLabel(string text)
-        {
-            Panel panel = new Panel();
-            panel.Margin = new Padding(0, 10, 0, 10);
-            panel.Size = new Size(50, 30);
-
-            Label lbl = new Label();
-            lbl.Dock = DockStyle.Fill;
-            lbl.AutoSize = false;
-            lbl.Width = 50;
-            lbl.TextAlign = ContentAlignment.TopRight;
-            lbl.Text = text;
-            lbl.Font = new Font("Segoe UI", 10, FontStyle.Regular);
-            
-            panel.Controls.Add(lbl);
-            return panel;
-        }
-
-        private Panel CreateDateSearchControl(string text)
-        {
-            Panel panel = new Panel();
-            panel.Margin = new Padding(0, 10, 10, 10);
-            panel.Size = new Size(80, 30);
-
-            DateTimePicker datePicker = new DateTimePicker();
-            datePicker.Dock = DockStyle.Fill;
-            datePicker.Format = DateTimePickerFormat.Short;
-            datePicker.Width = 80;
-            datePicker.CustomFormat = text;
-            datePicker.ShowCheckBox = true;            
-            datePicker.ValueChanged += (s, e) =>
-            {
-                datePicker.Format = DateTimePickerFormat.Short;
-            };
-
-            panel.Controls.Add(datePicker);
-            return panel;
-        }
-
-        private Panel CreateSearchControl()
-        {
-            Panel panel = new Panel();
-            panel.Margin = new Padding(10);
-            panel.Size = new Size(80, 30);
-            
-            TextBox searchText = new TextBox();
-            searchText.Dock = DockStyle.Fill;
-            searchText.Width = 80;
-            searchText.PlaceholderText = "Search";
-
-
-            panel.Controls.Add(searchText);
-            return panel;
-        }
+            dgvTransactions.DataSource = new BindingList<Transaction>(sampleData);
+        }       
     }
 }

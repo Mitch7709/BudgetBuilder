@@ -28,7 +28,7 @@ namespace BudgetBuilder
 
         private void ShowDashboard()
         {
-            incomeTotal = 5000;
+            incomeTotal = 4000;
             expenseTotal = 3200;
             balanceTotal = incomeTotal - expenseTotal;
 
