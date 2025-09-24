@@ -44,6 +44,8 @@
             label3 = new Label();
             panel4 = new Panel();
             SearchBox = new TextBox();
+            panel6 = new Panel();
+            btnFilter = new Button();
             panel5 = new Panel();
             dgvTransactions = new DataGridView();
             Date = new DataGridViewTextBoxColumn();
@@ -58,6 +60,7 @@
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel4.SuspendLayout();
+            panel6.SuspendLayout();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).BeginInit();
             SuspendLayout();
@@ -108,6 +111,7 @@
             flowLayoutPanel2.Controls.Add(panel2);
             flowLayoutPanel2.Controls.Add(panel3);
             flowLayoutPanel2.Controls.Add(panel4);
+            flowLayoutPanel2.Controls.Add(panel6);
             flowLayoutPanel2.Dock = DockStyle.Fill;
             flowLayoutPanel2.Location = new Point(4, 67);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
@@ -142,6 +146,7 @@
             // 
             // DatePickFrom
             // 
+            DatePickFrom.Checked = false;
             DatePickFrom.CustomFormat = " From ";
             DatePickFrom.Format = DateTimePickerFormat.Short;
             DatePickFrom.Location = new Point(47, 15);
@@ -169,6 +174,7 @@
             // 
             // DatePickTo
             // 
+            DatePickTo.Checked = false;
             DatePickTo.CustomFormat = " From ";
             DatePickTo.Format = DateTimePickerFormat.Short;
             DatePickTo.Location = new Point(47, 15);
@@ -190,7 +196,7 @@
             panel4.Controls.Add(SearchBox);
             panel4.Location = new Point(460, 3);
             panel4.Name = "panel4";
-            panel4.Size = new Size(92, 53);
+            panel4.Size = new Size(121, 53);
             panel4.TabIndex = 3;
             // 
             // SearchBox
@@ -199,8 +205,28 @@
             SearchBox.Location = new Point(6, 15);
             SearchBox.Name = "SearchBox";
             SearchBox.PlaceholderText = "Search";
-            SearchBox.Size = new Size(80, 23);
+            SearchBox.Size = new Size(106, 23);
             SearchBox.TabIndex = 0;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add(btnFilter);
+            panel6.Location = new Point(587, 3);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(121, 53);
+            panel6.TabIndex = 4;
+            // 
+            // btnFilter
+            // 
+            btnFilter.BackColor = SystemColors.ButtonHighlight;
+            btnFilter.Cursor = Cursors.Hand;
+            btnFilter.Location = new Point(22, 14);
+            btnFilter.Name = "btnFilter";
+            btnFilter.Size = new Size(75, 23);
+            btnFilter.TabIndex = 0;
+            btnFilter.Text = "Filter";
+            btnFilter.UseVisualStyleBackColor = false;
+            btnFilter.Click += btnFilter_Click;
             // 
             // panel5
             // 
@@ -285,6 +311,7 @@
             panel3.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            panel6.ResumeLayout(false);
             panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).EndInit();
             ResumeLayout(false);
@@ -313,5 +340,7 @@
         private DataGridViewTextBoxColumn Description;
         private DataGridViewTextBoxColumn Amount;
         private DataGridViewTextBoxColumn Type;
+        private Panel panel6;
+        private Button btnFilter;
     }
 }
