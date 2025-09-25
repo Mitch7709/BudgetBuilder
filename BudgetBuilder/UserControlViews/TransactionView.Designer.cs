@@ -36,12 +36,6 @@
             flowLayoutPanel2 = new FlowLayoutPanel();
             panel1 = new Panel();
             CategoryComboBox = new ComboBox();
-            panel2 = new Panel();
-            DatePickFrom = new DateTimePicker();
-            label2 = new Label();
-            panel3 = new Panel();
-            DatePickTo = new DateTimePicker();
-            label3 = new Label();
             panel4 = new Panel();
             SearchBox = new TextBox();
             panel6 = new Panel();
@@ -53,16 +47,22 @@
             Description = new DataGridViewTextBoxColumn();
             Amount = new DataGridViewTextBoxColumn();
             Type = new DataGridViewTextBoxColumn();
+            flowLayoutPanel3 = new FlowLayoutPanel();
+            panel2 = new Panel();
+            button1 = new Button();
+            panel3 = new Panel();
+            button2 = new Button();
             tableLayoutPanel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panel3.SuspendLayout();
             panel4.SuspendLayout();
             panel6.SuspendLayout();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).BeginInit();
+            flowLayoutPanel3.SuspendLayout();
+            panel2.SuspendLayout();
+            panel3.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -74,6 +74,7 @@
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 0);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel2, 0, 1);
             tableLayoutPanel1.Controls.Add(panel5, 0, 2);
+            tableLayoutPanel1.Controls.Add(flowLayoutPanel3, 0, 3);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -82,6 +83,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(762, 629);
             tableLayoutPanel1.TabIndex = 0;
             // 
@@ -108,8 +110,6 @@
             // flowLayoutPanel2
             // 
             flowLayoutPanel2.Controls.Add(panel1);
-            flowLayoutPanel2.Controls.Add(panel2);
-            flowLayoutPanel2.Controls.Add(panel3);
             flowLayoutPanel2.Controls.Add(panel4);
             flowLayoutPanel2.Controls.Add(panel6);
             flowLayoutPanel2.Dock = DockStyle.Fill;
@@ -135,66 +135,10 @@
             CategoryComboBox.TabIndex = 2;
             CategoryComboBox.Text = "Category";
             // 
-            // panel2
-            // 
-            panel2.Controls.Add(DatePickFrom);
-            panel2.Controls.Add(label2);
-            panel2.Location = new Point(142, 3);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(153, 53);
-            panel2.TabIndex = 1;
-            // 
-            // DatePickFrom
-            // 
-            DatePickFrom.Checked = false;
-            DatePickFrom.CustomFormat = " From ";
-            DatePickFrom.Format = DateTimePickerFormat.Short;
-            DatePickFrom.Location = new Point(47, 15);
-            DatePickFrom.Name = "DatePickFrom";
-            DatePickFrom.ShowCheckBox = true;
-            DatePickFrom.Size = new Size(100, 23);
-            DatePickFrom.TabIndex = 1;
-            // 
-            // label2
-            // 
-            label2.Location = new Point(3, 18);
-            label2.Name = "label2";
-            label2.Size = new Size(38, 15);
-            label2.TabIndex = 0;
-            label2.Text = "From:";
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(DatePickTo);
-            panel3.Controls.Add(label3);
-            panel3.Location = new Point(301, 3);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(153, 53);
-            panel3.TabIndex = 2;
-            // 
-            // DatePickTo
-            // 
-            DatePickTo.Checked = false;
-            DatePickTo.CustomFormat = " From ";
-            DatePickTo.Format = DateTimePickerFormat.Short;
-            DatePickTo.Location = new Point(47, 15);
-            DatePickTo.Name = "DatePickTo";
-            DatePickTo.ShowCheckBox = true;
-            DatePickTo.Size = new Size(100, 23);
-            DatePickTo.TabIndex = 1;
-            // 
-            // label3
-            // 
-            label3.Location = new Point(3, 18);
-            label3.Name = "label3";
-            label3.Size = new Size(38, 15);
-            label3.TabIndex = 0;
-            label3.Text = "To:";
-            // 
             // panel4
             // 
             panel4.Controls.Add(SearchBox);
-            panel4.Location = new Point(460, 3);
+            panel4.Location = new Point(142, 3);
             panel4.Name = "panel4";
             panel4.Size = new Size(121, 53);
             panel4.TabIndex = 3;
@@ -211,7 +155,7 @@
             // panel6
             // 
             panel6.Controls.Add(btnFilter);
-            panel6.Location = new Point(587, 3);
+            panel6.Location = new Point(269, 3);
             panel6.Name = "panel6";
             panel6.Size = new Size(121, 53);
             panel6.TabIndex = 4;
@@ -295,6 +239,52 @@
             Type.ReadOnly = true;
             Type.Width = 80;
             // 
+            // flowLayoutPanel3
+            // 
+            flowLayoutPanel3.Controls.Add(panel2);
+            flowLayoutPanel3.Controls.Add(panel3);
+            flowLayoutPanel3.Dock = DockStyle.Fill;
+            flowLayoutPanel3.Location = new Point(4, 567);
+            flowLayoutPanel3.Name = "flowLayoutPanel3";
+            flowLayoutPanel3.Size = new Size(754, 58);
+            flowLayoutPanel3.TabIndex = 3;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(button1);
+            panel2.Location = new Point(3, 3);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(142, 55);
+            panel2.TabIndex = 0;
+            // 
+            // button1
+            // 
+            button1.AutoSize = true;
+            button1.Location = new Point(21, 13);
+            button1.Name = "button1";
+            button1.Size = new Size(103, 25);
+            button1.TabIndex = 0;
+            button1.Text = "Add Transaction";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(button2);
+            panel3.Location = new Point(151, 3);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(142, 55);
+            panel3.TabIndex = 1;
+            // 
+            // button2
+            // 
+            button2.AutoSize = true;
+            button2.Location = new Point(21, 13);
+            button2.Name = "button2";
+            button2.Size = new Size(103, 25);
+            button2.TabIndex = 0;
+            button2.Text = "Edit Transaction";
+            button2.UseVisualStyleBackColor = true;
+            // 
             // TransactionView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -307,13 +297,16 @@
             flowLayoutPanel1.PerformLayout();
             flowLayoutPanel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel3.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel6.ResumeLayout(false);
             panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).EndInit();
+            flowLayoutPanel3.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -325,12 +318,6 @@
         private FlowLayoutPanel flowLayoutPanel2;
         private Panel panel1;
         private ComboBox CategoryComboBox;
-        private Panel panel2;
-        private Label label2;
-        private DateTimePicker DatePickFrom;
-        private Panel panel3;
-        private DateTimePicker DatePickTo;
-        private Label label3;
         private Panel panel4;
         private TextBox SearchBox;
         private Panel panel5;
@@ -342,5 +329,10 @@
         private DataGridViewTextBoxColumn Type;
         private Panel panel6;
         private Button btnFilter;
+        private FlowLayoutPanel flowLayoutPanel3;
+        private Panel panel2;
+        private Button button1;
+        private Panel panel3;
+        private Button button2;
     }
 }

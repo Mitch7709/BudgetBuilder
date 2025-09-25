@@ -1,5 +1,4 @@
-﻿using BudgetBuilder.Services;
-using BudgetBuilder.Transactions;
+﻿using BudgetBuilder.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,10 +16,12 @@ namespace BudgetBuilder.UserControlViews
     public partial class TransactionView : UserControl
     {
         private readonly ObservableCollection<Transaction> _transactions = new ObservableCollection<Transaction>();
+        private readonly int selectedMonth;
 
-        public TransactionView()
+        public TransactionView(int selectedMonth)
         {
-            _transactions = TransactionDataService.GetTransactions();         
+            this.selectedMonth = selectedMonth;
+            _transactions = TransactionDataService.GetTransactionsByMonth(this.selectedMonth, DateTime.Now.Year);         
 
             InitializeComponent();
 
@@ -31,11 +32,9 @@ namespace BudgetBuilder.UserControlViews
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            _transactions.Clear();
-            var filtered = TransactionDataService.GetFilteredTransactions(
-                CategoryComboBox.SelectedItem?.ToString(),
-                DatePickTo.Checked ? DatePickTo.Value.Date : null,
-                DatePickFrom.Checked ? DatePickFrom.Value.Date : null);
+            var filtered = _transactions.Where(t =>
+                (string.IsNullOrEmpty(CategoryComboBox.SelectedItem?.ToString()) || t.Category == CategoryComboBox.SelectedItem.ToString())
+            ).ToList();
 
             dgvTransactions.DataSource = new BindingList<Transaction>(filtered);
         }

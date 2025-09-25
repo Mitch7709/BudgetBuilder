@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             sideBar = new Panel();
+            label1 = new Label();
+            monthComboBox = new ComboBox();
             transBtn = new Button();
             dashBtn = new Button();
             mainPanel = new Panel();
@@ -39,19 +41,40 @@
             // 
             sideBar.BackColor = Color.LightGray;
             sideBar.BorderStyle = BorderStyle.Fixed3D;
+            sideBar.Controls.Add(label1);
+            sideBar.Controls.Add(monthComboBox);
             sideBar.Controls.Add(transBtn);
             sideBar.Controls.Add(dashBtn);
             sideBar.Dock = DockStyle.Left;
             sideBar.Location = new Point(0, 0);
             sideBar.Name = "sideBar";
-            sideBar.Size = new Size(150, 629);
+            sideBar.Size = new Size(144, 629);
             sideBar.TabIndex = 13;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(10, 184);
+            label1.Name = "label1";
+            label1.Size = new Size(43, 15);
+            label1.TabIndex = 17;
+            label1.Text = "Month";
+            // 
+            // monthComboBox
+            // 
+            monthComboBox.FormattingEnabled = true;
+            monthComboBox.Items.AddRange(new object[] { "January", "February ", "March ", "April ", "May ", "June ", "July ", "August ", "September", "October", "November", "December" });
+            monthComboBox.Location = new Point(10, 202);
+            monthComboBox.Name = "monthComboBox";
+            monthComboBox.Size = new Size(121, 23);
+            monthComboBox.TabIndex = 16;
+            monthComboBox.SelectedIndexChanged += monthComboBox_SelectedIndexChanged;
             // 
             // transBtn
             // 
-            transBtn.Dock = DockStyle.Top;
+            transBtn.Cursor = Cursors.Hand;
             transBtn.FlatStyle = FlatStyle.Flat;
-            transBtn.Location = new Point(0, 23);
+            transBtn.Location = new Point(-2, 21);
             transBtn.Name = "transBtn";
             transBtn.Size = new Size(146, 23);
             transBtn.TabIndex = 15;
@@ -61,9 +84,9 @@
             // 
             // dashBtn
             // 
-            dashBtn.Dock = DockStyle.Top;
+            dashBtn.Cursor = Cursors.Hand;
             dashBtn.FlatStyle = FlatStyle.Flat;
-            dashBtn.Location = new Point(0, 0);
+            dashBtn.Location = new Point(-2, -2);
             dashBtn.Name = "dashBtn";
             dashBtn.Size = new Size(146, 23);
             dashBtn.TabIndex = 14;
@@ -76,9 +99,9 @@
             mainPanel.BackColor = Color.WhiteSmoke;
             mainPanel.BorderStyle = BorderStyle.FixedSingle;
             mainPanel.Dock = DockStyle.Fill;
-            mainPanel.Location = new Point(150, 0);
+            mainPanel.Location = new Point(144, 0);
             mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(762, 629);
+            mainPanel.Size = new Size(768, 629);
             mainPanel.TabIndex = 14;
             // 
             // MainForm
@@ -91,6 +114,7 @@
             Name = "MainForm";
             Text = "Budget Builder";
             sideBar.ResumeLayout(false);
+            sideBar.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -99,5 +123,7 @@
         private Button dashBtn;
         private Panel mainPanel;
         private Button transBtn;
+        private Label label1;
+        private ComboBox monthComboBox;
     }
 }

@@ -1,3 +1,4 @@
+using BudgetBuilder.Transactions;
 using BudgetBuilder.UserControlViews;
 
 namespace BudgetBuilder
@@ -13,6 +14,8 @@ namespace BudgetBuilder
         {
             InitializeComponent();
 
+            monthComboBox.SelectedIndex = DateTime.Now.Month - 1;
+
             ShowDashboard();
         }
 
@@ -26,10 +29,17 @@ namespace BudgetBuilder
             ShowTransactions();
         }
 
+        private void monthComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowDashboard();
+        }
+
         private void ShowDashboard()
         {
-            incomeTotal = 4000;
-            expenseTotal = 3200;
+            var transactions = TransactionDataService.GetTransactionsByMonth(monthComboBox.SelectedIndex + 1, DateTime.Now.Year).ToList();
+
+            incomeTotal = transactions.Where(t => t.Type == Transaction.TransactionType.Income).Sum(t => t.Amount);
+            expenseTotal = transactions.Where(t => t.Type == Transaction.TransactionType.Expense).Sum(t => Math.Abs(t.Amount));
             balanceTotal = incomeTotal - expenseTotal;
 
             mainPanel.Controls.Clear();
@@ -44,9 +54,11 @@ namespace BudgetBuilder
         {
             mainPanel.Controls.Clear();
 
-            UserControl transView = new TransactionView();
+            UserControl transView = new TransactionView(monthComboBox.SelectedIndex + 1);
             transView.Dock = DockStyle.Fill;
             mainPanel.Controls.Add(transView);
-        }        
+        }
+
+        
     }
 }
