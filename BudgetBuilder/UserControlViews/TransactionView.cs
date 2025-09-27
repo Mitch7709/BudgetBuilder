@@ -1,4 +1,5 @@
-﻿using BudgetBuilder.Transactions;
+﻿using BudgetBuilder.Popups;
+using BudgetBuilder.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,22 +22,62 @@ namespace BudgetBuilder.UserControlViews
         public TransactionView(int selectedMonth)
         {
             this.selectedMonth = selectedMonth;
-            _transactions = TransactionDataService.GetTransactionsByMonth(this.selectedMonth, DateTime.Now.Year);         
+            _transactions = TransactionDataService.GetTransactions();
 
             InitializeComponent();
 
-            CategoryComboBox.Items.AddRange(new string[] { "", "Income", "Rent", "Food", "Utilities" });
+            var categories = TransactionDataService.GetTransactionCategories();
 
-            dgvTransactions.DataSource = new BindingList<Transaction>(_transactions);
+            CategoryComboBox.Items.Add("All");
+            CategoryComboBox.Items.AddRange(categories.ToArray());
+
+            var transactionsForMonth = _transactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
+            dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
         }
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
-            var filtered = _transactions.Where(t =>
-                (string.IsNullOrEmpty(CategoryComboBox.SelectedItem?.ToString()) || t.Category == CategoryComboBox.SelectedItem.ToString())
-            ).ToList();
+            var transactionsForMonth = _transactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
 
-            dgvTransactions.DataSource = new BindingList<Transaction>(filtered);
+            if (CategoryComboBox.SelectedItem == null || CategoryComboBox.SelectedItem.ToString() == "All")
+            {
+                dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
+            }
+            else
+            {
+                var filtered = transactionsForMonth.Where(t =>
+                    (string.IsNullOrEmpty(CategoryComboBox.SelectedItem?.ToString()) || t.Category == CategoryComboBox.SelectedItem.ToString())
+                ).ToList();
+
+                dgvTransactions.DataSource = new BindingList<Transaction>(filtered);
+            }                
+        }
+
+        private void btnAddTransaction_Click_1(object sender, EventArgs e)
+        {
+            var transaction = new Transaction(DateTime.Now, string.Empty, 0.0, string.Empty, TransactionType.Expense);
+            var popUp = new TransactionPopup("Add", transaction);
+            popUp.ShowDialog();
+
+            var updatedTransactions = TransactionDataService.GetTransactions();
+            var transactionsForMonth = updatedTransactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
+            dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
+        }
+
+        private void btnEditTransaction_Click(object sender, EventArgs e)
+        {
+            var transaction = (Transaction)dgvTransactions.CurrentRow?.DataBoundItem;
+            if (transaction == null) 
+                return;
+
+            var transactionIndex = _transactions.IndexOf(transaction);
+            var popUp = new TransactionPopup("Edit", transaction, transactionIndex);
+            popUp.ShowDialog();
+
+            //Update the DataGridView to reflect changes
+            var updatedTransactions = TransactionDataService.GetTransactions();
+            var transactionsForMonth = updatedTransactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
+            dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
         }
     }
 }

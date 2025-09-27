@@ -49,9 +49,9 @@
             Type = new DataGridViewTextBoxColumn();
             flowLayoutPanel3 = new FlowLayoutPanel();
             panel2 = new Panel();
-            button1 = new Button();
+            btnAddTransaction = new Button();
             panel3 = new Panel();
-            button2 = new Button();
+            btnEditTransaction = new Button();
             tableLayoutPanel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
@@ -251,39 +251,41 @@
             // 
             // panel2
             // 
-            panel2.Controls.Add(button1);
+            panel2.Controls.Add(btnAddTransaction);
             panel2.Location = new Point(3, 3);
             panel2.Name = "panel2";
             panel2.Size = new Size(142, 55);
             panel2.TabIndex = 0;
             // 
-            // button1
+            // btnAddTransaction
             // 
-            button1.AutoSize = true;
-            button1.Location = new Point(21, 13);
-            button1.Name = "button1";
-            button1.Size = new Size(103, 25);
-            button1.TabIndex = 0;
-            button1.Text = "Add Transaction";
-            button1.UseVisualStyleBackColor = true;
+            btnAddTransaction.AutoSize = true;
+            btnAddTransaction.Location = new Point(21, 13);
+            btnAddTransaction.Name = "btnAddTransaction";
+            btnAddTransaction.Size = new Size(103, 25);
+            btnAddTransaction.TabIndex = 0;
+            btnAddTransaction.Text = "Add Transaction";
+            btnAddTransaction.UseVisualStyleBackColor = true;
+            btnAddTransaction.Click += btnAddTransaction_Click_1;
             // 
             // panel3
             // 
-            panel3.Controls.Add(button2);
+            panel3.Controls.Add(btnEditTransaction);
             panel3.Location = new Point(151, 3);
             panel3.Name = "panel3";
             panel3.Size = new Size(142, 55);
             panel3.TabIndex = 1;
             // 
-            // button2
+            // btnEditTransaction
             // 
-            button2.AutoSize = true;
-            button2.Location = new Point(21, 13);
-            button2.Name = "button2";
-            button2.Size = new Size(103, 25);
-            button2.TabIndex = 0;
-            button2.Text = "Edit Transaction";
-            button2.UseVisualStyleBackColor = true;
+            btnEditTransaction.AutoSize = true;
+            btnEditTransaction.Location = new Point(21, 13);
+            btnEditTransaction.Name = "btnEditTransaction";
+            btnEditTransaction.Size = new Size(103, 25);
+            btnEditTransaction.TabIndex = 0;
+            btnEditTransaction.Text = "Edit Transaction";
+            btnEditTransaction.UseVisualStyleBackColor = true;
+            btnEditTransaction.Click += btnEditTransaction_Click;
             // 
             // TransactionView
             // 
@@ -331,8 +333,8 @@
         private Button btnFilter;
         private FlowLayoutPanel flowLayoutPanel3;
         private Panel panel2;
-        private Button button1;
+        private Button btnAddTransaction;
         private Panel panel3;
-        private Button button2;
+        private Button btnEditTransaction;
     }
 }
