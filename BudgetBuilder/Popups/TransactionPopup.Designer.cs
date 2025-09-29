@@ -147,6 +147,7 @@
             cancelBtn.TabIndex = 12;
             cancelBtn.Text = "Cancel";
             cancelBtn.UseVisualStyleBackColor = true;
+            cancelBtn.Click += cancelBtn_Click;
             // 
             // TransactionPopup
             // 

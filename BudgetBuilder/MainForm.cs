@@ -47,7 +47,8 @@ namespace BudgetBuilder
 
         private void ShowDashboard()
         {
-            var transactions = TransactionDataService.GetTransactionsByMonth(monthComboBox.SelectedIndex + 1, DateTime.Now.Year).ToList();
+            var transactions = TransactionDataService.Load()
+                .Where(t => t.Date.Month == monthComboBox.SelectedIndex + 1 && t.Date.Year == DateTime.Now.Year).ToList();
 
             incomeTotal = transactions.Where(t => t.Type == Transaction.TransactionType.Income).Sum(t => t.Amount);
             expenseTotal = transactions.Where(t => t.Type == Transaction.TransactionType.Expense).Sum(t => (t.Amount));

@@ -22,7 +22,7 @@ namespace BudgetBuilder.UserControlViews
         public TransactionView(int selectedMonth)
         {
             this.selectedMonth = selectedMonth;
-            _transactions = TransactionDataService.GetTransactions();
+            _transactions = TransactionDataService.Load();
 
             InitializeComponent();
 
@@ -50,7 +50,7 @@ namespace BudgetBuilder.UserControlViews
                 ).ToList();
 
                 dgvTransactions.DataSource = new BindingList<Transaction>(filtered);
-            }                
+            }
         }
 
         private void btnAddTransaction_Click_1(object sender, EventArgs e)
@@ -67,7 +67,7 @@ namespace BudgetBuilder.UserControlViews
         private void btnEditTransaction_Click(object sender, EventArgs e)
         {
             var transaction = (Transaction)dgvTransactions.CurrentRow?.DataBoundItem;
-            if (transaction == null) 
+            if (transaction == null)
                 return;
 
             var transactionIndex = _transactions.IndexOf(transaction);
@@ -78,6 +78,11 @@ namespace BudgetBuilder.UserControlViews
             var updatedTransactions = TransactionDataService.GetTransactions();
             var transactionsForMonth = updatedTransactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
             dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            TransactionDataService.Save(_transactions);
         }
     }
 }

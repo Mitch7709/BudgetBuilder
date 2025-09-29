@@ -53,5 +53,10 @@ namespace BudgetBuilder.Popups
             }
             this.Close();
         }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+        }
     }
 }

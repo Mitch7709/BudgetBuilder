@@ -52,6 +52,7 @@
             btnAddTransaction = new Button();
             panel3 = new Panel();
             btnEditTransaction = new Button();
+            btnSave = new Button();
             tableLayoutPanel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
@@ -90,6 +91,7 @@
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Controls.Add(label1);
+            flowLayoutPanel1.Controls.Add(btnSave);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(4, 4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -287,6 +289,17 @@
             btnEditTransaction.UseVisualStyleBackColor = true;
             btnEditTransaction.Click += btnEditTransaction_Click;
             // 
+            // btnSave
+            // 
+            btnSave.AutoSize = true;
+            btnSave.Location = new Point(142, 13);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(90, 25);
+            btnSave.TabIndex = 1;
+            btnSave.Text = "Save Changes";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
+            // 
             // TransactionView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -336,5 +349,6 @@
         private Button btnAddTransaction;
         private Panel panel3;
         private Button btnEditTransaction;
+        private Button btnSave;
     }
 }

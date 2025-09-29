@@ -3,38 +3,41 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BudgetBuilder.Transactions
 {
     public static class TransactionDataService
     {
-        public static List<Transaction> transactions = new List<Transaction>()
+        private static readonly string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BudgetBuilder", "transactions.json");
+
+        public static List<Transaction> transactions = new List<Transaction>();
+
+        #region File Operations
+        public static void Save(ObservableCollection<Transaction> transactions)
         {
-            new Transaction(new DateTime(2025, 1, 5), "Grocery Store", 150.75, "Food", Transaction.TransactionType.Expense),
-            new Transaction(new DateTime(2025, 1, 10), "Salary", 3000.00, "Income", Transaction.TransactionType.Income),
-            new Transaction(new DateTime(2025, 1, 15), "Electric Bill", 75.50, "Utilities", Transaction.TransactionType.Expense),
-            new Transaction(new DateTime(2025, 9, 20), "Restaurant", 60.00, "Food", Transaction.TransactionType.Expense),
-            new Transaction(new DateTime(2025, 9, 25), "Freelance Project", 500.00, "Income", Transaction.TransactionType.Income),
-            new Transaction(new DateTime(2025, 9, 28), "Internet Bill", 45.00, "Utilities", Transaction.TransactionType.Expense),
-            new Transaction(new DateTime(2025, 2, 3), "Grocery Store", 130.20, "Food", Transaction.TransactionType.Expense),
-            new Transaction(new DateTime(2025, 2, 10), "Salary", 3000.00, "Income", Transaction.TransactionType.Income),
-            new Transaction(new DateTime(2025, 3, 14), "Valentine's Gift", 80.00, "Gifts", Transaction.TransactionType.Expense),
-            new Transaction(new DateTime(2025, 4, 18), "Electric Bill", 70.25, "Utilities", Transaction.TransactionType.Expense),
-            new Transaction(new DateTime(2025, 4, 22), "Restaurant", 55.00, "Food", Transaction.TransactionType.Expense),
-            new Transaction(new DateTime(2025, 5, 27), "Freelance Project", 600.00, "Income", Transaction.TransactionType.Income),
-            new Transaction(new DateTime(2025, 7, 29), "Internet Bill", 50.00, "Utilities", Transaction.TransactionType.Expense)
-        };
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
+
+            var json = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(filePath, json);
+        }
+
+        public static ObservableCollection<Transaction> Load()
+        {
+            if (!File.Exists(filePath))
+                return new ObservableCollection<Transaction>();
+
+            var json = File.ReadAllText(filePath);
+
+            transactions = JsonSerializer.Deserialize<List<Transaction>>(json) ?? transactions;
+            return new ObservableCollection<Transaction>(transactions);
+        }
+        #endregion
 
         public static ObservableCollection<Transaction> GetTransactions()
         {
             return new ObservableCollection<Transaction>(transactions);
-        }
-
-        public static ObservableCollection<Transaction> GetTransactionsByMonth(int month, int year)
-        {
-            var filtered = transactions.Where(t => t.Date.Month == month && t.Date.Year == year);
-            return new ObservableCollection<Transaction>(filtered);
         }
 
         public static ObservableCollection<string> GetTransactionCategories()
