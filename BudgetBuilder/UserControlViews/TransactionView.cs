@@ -1,15 +1,8 @@
 ﻿using BudgetBuilder.Popups;
 using BudgetBuilder.Transactions;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using static BudgetBuilder.Transactions.Transaction;
 
 namespace BudgetBuilder.UserControlViews
@@ -53,7 +46,7 @@ namespace BudgetBuilder.UserControlViews
             }
         }
 
-        private void btnAddTransaction_Click_1(object sender, EventArgs e)
+        private void btnAddTransaction_Click(object sender, EventArgs e)
         {
             var transaction = new Transaction(DateTime.Now, string.Empty, 0.0, string.Empty, TransactionType.Expense);
             var popUp = new TransactionPopup("Add", transaction);

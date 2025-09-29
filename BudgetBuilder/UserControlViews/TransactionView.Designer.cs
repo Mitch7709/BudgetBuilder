@@ -268,7 +268,7 @@
             btnAddTransaction.TabIndex = 0;
             btnAddTransaction.Text = "Add Transaction";
             btnAddTransaction.UseVisualStyleBackColor = true;
-            btnAddTransaction.Click += btnAddTransaction_Click_1;
+            btnAddTransaction.Click += btnAddTransaction_Click;
             // 
             // panel3
             // 

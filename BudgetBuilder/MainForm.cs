@@ -5,11 +5,8 @@ namespace BudgetBuilder
 {
     public partial class MainForm : Form
     {
-
-        double incomeTotal = 0;
-        double expenseTotal = 0;
-        double balanceTotal = 0;
         string currentView;
+        int selectedMonth;
 
         public MainForm()
         {
@@ -47,16 +44,9 @@ namespace BudgetBuilder
 
         private void ShowDashboard()
         {
-            var transactions = TransactionDataService.Load()
-                .Where(t => t.Date.Month == monthComboBox.SelectedIndex + 1 && t.Date.Year == DateTime.Now.Year).ToList();
-
-            incomeTotal = transactions.Where(t => t.Type == Transaction.TransactionType.Income).Sum(t => t.Amount);
-            expenseTotal = transactions.Where(t => t.Type == Transaction.TransactionType.Expense).Sum(t => (t.Amount));
-            balanceTotal = incomeTotal - expenseTotal;
-
             mainPanel.Controls.Clear();
 
-            UserControl dashView = new DashboardView(incomeTotal, expenseTotal, balanceTotal);
+            UserControl dashView = new DashboardView(monthComboBox.SelectedIndex + 1);
             currentView = "Dashboard";
             dashView.Dock = DockStyle.Fill;
             mainPanel.Controls.Add(dashView);

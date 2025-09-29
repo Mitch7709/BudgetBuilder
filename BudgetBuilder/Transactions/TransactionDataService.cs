@@ -49,6 +49,7 @@ namespace BudgetBuilder.Transactions
         public static void AddTransaction(Transaction transaction)
         {
             transactions.Add(transaction);
+            Save(new ObservableCollection<Transaction>(transactions));
         }
 
         public static void UpdateTransaction(int index, Transaction updatedTransaction)
@@ -56,6 +57,7 @@ namespace BudgetBuilder.Transactions
             if (index >= 0 && index < transactions.Count)
             {
                 transactions[index] = updatedTransaction;
+                Save(new ObservableCollection<Transaction>(transactions));
             }
         }
     }
