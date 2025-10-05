@@ -38,8 +38,6 @@
             CategoryComboBox = new ComboBox();
             panel4 = new Panel();
             SearchBox = new TextBox();
-            panel6 = new Panel();
-            btnFilter = new Button();
             panel5 = new Panel();
             dgvTransactions = new DataGridView();
             Date = new DataGridViewTextBoxColumn();
@@ -52,13 +50,11 @@
             btnAddTransaction = new Button();
             panel3 = new Panel();
             btnEditTransaction = new Button();
-            btnSave = new Button();
             tableLayoutPanel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
-            panel6.SuspendLayout();
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).BeginInit();
             flowLayoutPanel3.SuspendLayout();
@@ -91,7 +87,6 @@
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Controls.Add(label1);
-            flowLayoutPanel1.Controls.Add(btnSave);
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(4, 4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -113,7 +108,6 @@
             // 
             flowLayoutPanel2.Controls.Add(panel1);
             flowLayoutPanel2.Controls.Add(panel4);
-            flowLayoutPanel2.Controls.Add(panel6);
             flowLayoutPanel2.Dock = DockStyle.Fill;
             flowLayoutPanel2.Location = new Point(4, 67);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
@@ -136,6 +130,7 @@
             CategoryComboBox.Size = new Size(121, 23);
             CategoryComboBox.TabIndex = 2;
             CategoryComboBox.Text = "Category";
+            CategoryComboBox.SelectedIndexChanged += CategoryComboBox_SelectedIndexChanged;
             // 
             // panel4
             // 
@@ -153,26 +148,6 @@
             SearchBox.PlaceholderText = "Search";
             SearchBox.Size = new Size(106, 23);
             SearchBox.TabIndex = 0;
-            // 
-            // panel6
-            // 
-            panel6.Controls.Add(btnFilter);
-            panel6.Location = new Point(269, 3);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(121, 53);
-            panel6.TabIndex = 4;
-            // 
-            // btnFilter
-            // 
-            btnFilter.BackColor = SystemColors.ButtonHighlight;
-            btnFilter.Cursor = Cursors.Hand;
-            btnFilter.Location = new Point(22, 14);
-            btnFilter.Name = "btnFilter";
-            btnFilter.Size = new Size(75, 23);
-            btnFilter.TabIndex = 0;
-            btnFilter.Text = "Filter";
-            btnFilter.UseVisualStyleBackColor = false;
-            btnFilter.Click += btnFilter_Click;
             // 
             // panel5
             // 
@@ -289,17 +264,6 @@
             btnEditTransaction.UseVisualStyleBackColor = true;
             btnEditTransaction.Click += btnEditTransaction_Click;
             // 
-            // btnSave
-            // 
-            btnSave.AutoSize = true;
-            btnSave.Location = new Point(142, 13);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(90, 25);
-            btnSave.TabIndex = 1;
-            btnSave.Text = "Save Changes";
-            btnSave.UseVisualStyleBackColor = true;
-            btnSave.Click += btnSave_Click;
-            // 
             // TransactionView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -314,7 +278,6 @@
             panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
-            panel6.ResumeLayout(false);
             panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvTransactions).EndInit();
             flowLayoutPanel3.ResumeLayout(false);
@@ -342,13 +305,10 @@
         private DataGridViewTextBoxColumn Description;
         private DataGridViewTextBoxColumn Amount;
         private DataGridViewTextBoxColumn Type;
-        private Panel panel6;
-        private Button btnFilter;
         private FlowLayoutPanel flowLayoutPanel3;
         private Panel panel2;
         private Button btnAddTransaction;
         private Panel panel3;
         private Button btnEditTransaction;
-        private Button btnSave;
     }
 }

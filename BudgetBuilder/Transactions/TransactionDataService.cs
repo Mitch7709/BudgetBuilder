@@ -10,35 +10,30 @@ namespace BudgetBuilder.Transactions
 {
     public static class TransactionDataService
     {
-        private static readonly string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BudgetBuilder", "transactions.json");
+        private static readonly string transactionPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BudgetBuilder", "transactions.json");
 
         public static List<Transaction> transactions = new List<Transaction>();
 
         #region File Operations
         public static void Save(ObservableCollection<Transaction> transactions)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
+            Directory.CreateDirectory(Path.GetDirectoryName(transactionPath)!);
 
             var json = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(filePath, json);
+            File.WriteAllText(transactionPath, json);
         }
 
         public static ObservableCollection<Transaction> Load()
         {
-            if (!File.Exists(filePath))
+            if (!File.Exists(transactionPath))
                 return new ObservableCollection<Transaction>();
 
-            var json = File.ReadAllText(filePath);
+            var json = File.ReadAllText(transactionPath);
 
             transactions = JsonSerializer.Deserialize<List<Transaction>>(json) ?? transactions;
             return new ObservableCollection<Transaction>(transactions);
         }
         #endregion
-
-        public static ObservableCollection<Transaction> GetTransactions()
-        {
-            return new ObservableCollection<Transaction>(transactions);
-        }
 
         public static ObservableCollection<string> GetTransactionCategories()
         {

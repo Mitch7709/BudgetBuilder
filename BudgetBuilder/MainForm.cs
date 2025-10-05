@@ -5,8 +5,7 @@ namespace BudgetBuilder
 {
     public partial class MainForm : Form
     {
-        string currentView;
-        int selectedMonth;
+        string currentView = "";
 
         public MainForm()
         {

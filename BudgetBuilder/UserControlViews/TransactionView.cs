@@ -28,7 +28,7 @@ namespace BudgetBuilder.UserControlViews
             dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
         }
 
-        private void btnFilter_Click(object sender, EventArgs e)
+        private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var transactionsForMonth = _transactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
 
@@ -52,9 +52,7 @@ namespace BudgetBuilder.UserControlViews
             var popUp = new TransactionPopup("Add", transaction);
             popUp.ShowDialog();
 
-            var updatedTransactions = TransactionDataService.GetTransactions();
-            var transactionsForMonth = updatedTransactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
-            dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
+            UpdateTransactions();
         }
 
         private void btnEditTransaction_Click(object sender, EventArgs e)
@@ -67,15 +65,17 @@ namespace BudgetBuilder.UserControlViews
             var popUp = new TransactionPopup("Edit", transaction, transactionIndex);
             popUp.ShowDialog();
 
-            //Update the DataGridView to reflect changes
-            var updatedTransactions = TransactionDataService.GetTransactions();
+            UpdateTransactions();
+        }
+
+
+        private void UpdateTransactions()
+        {
+            var updatedTransactions = TransactionDataService.Load();
             var transactionsForMonth = updatedTransactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
             dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            TransactionDataService.Save(_transactions);
-        }
+
     }
 }
