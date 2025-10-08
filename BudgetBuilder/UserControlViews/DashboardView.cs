@@ -12,9 +12,9 @@ namespace BudgetBuilder.UserControlViews
         private readonly double _expenseTotal = 0;
         private readonly double _balanceTotal = 0;
 
-        public DashboardView(int selectedMonth)
+        public DashboardView(int selectedMonth, ObservableCollection<Transaction> transactions)
         {
-            _transactions = TransactionDataService.Load();
+            _transactions = transactions;
             var transactionsForMonth = _transactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
 
             _incomeTotal = transactionsForMonth.Where(t => t.Type == TransactionType.Income).Sum(t => t.Amount);

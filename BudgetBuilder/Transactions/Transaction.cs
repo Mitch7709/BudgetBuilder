@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace BudgetBuilder.Transactions
 {
@@ -13,6 +9,7 @@ namespace BudgetBuilder.Transactions
         public double Amount { get; set; }
         public string Category { get; set; }
         public TransactionType Type { get; set; }
+
         public Transaction(DateTime date, string description, double amount, string category, TransactionType type)
         {
             Date = date;
@@ -20,6 +17,17 @@ namespace BudgetBuilder.Transactions
             Amount = amount;
             Category = category;
             Type = type;
+        }
+
+        public string ValidateFields()
+        {    
+            if (string.IsNullOrWhiteSpace(Description))
+                return "Description cannot be empty.";
+            if (Amount <= 0)
+                return "Amount must be greater than zero.";
+            if (string.IsNullOrWhiteSpace(Category))
+                return "Category cannot be empty.";
+            return string.Empty; // No validation errors
         }
 
         public enum TransactionType

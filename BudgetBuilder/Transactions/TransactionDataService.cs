@@ -15,7 +15,7 @@ namespace BudgetBuilder.Transactions
         public static List<Transaction> transactions = new List<Transaction>();
 
         #region File Operations
-        public static void Save(ObservableCollection<Transaction> transactions)
+        public static void Save()
         {
             Directory.CreateDirectory(Path.GetDirectoryName(transactionPath)!);
 
@@ -35,6 +35,11 @@ namespace BudgetBuilder.Transactions
         }
         #endregion
 
+        public static ObservableCollection<Transaction> GetTransactions()
+        {
+            return new ObservableCollection<Transaction>(transactions);
+        }
+
         public static ObservableCollection<string> GetTransactionCategories()
         {
             var categories = transactions.Select(t => t.Category).Distinct().ToList();
@@ -44,7 +49,6 @@ namespace BudgetBuilder.Transactions
         public static void AddTransaction(Transaction transaction)
         {
             transactions.Add(transaction);
-            Save(new ObservableCollection<Transaction>(transactions));
         }
 
         public static void UpdateTransaction(int index, Transaction updatedTransaction)
@@ -52,7 +56,14 @@ namespace BudgetBuilder.Transactions
             if (index >= 0 && index < transactions.Count)
             {
                 transactions[index] = updatedTransaction;
-                Save(new ObservableCollection<Transaction>(transactions));
+            }
+        }
+
+        public static void DeleteTransaction(int index)
+        {
+            if (index >= 0 && index < transactions.Count)
+            {
+                transactions.RemoveAt(index);
             }
         }
     }

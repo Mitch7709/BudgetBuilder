@@ -43,6 +43,13 @@ namespace BudgetBuilder.Popups
                 (Transaction.TransactionType)Enum.Parse(typeof(Transaction.TransactionType), typeValue.Text)
             );
 
+            var validationError = transaction.ValidateFields();
+            if (!string.IsNullOrEmpty(validationError))
+            {
+                MessageBox.Show(validationError, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (_action == "Add")
             {
                 TransactionDataService.AddTransaction(transaction);

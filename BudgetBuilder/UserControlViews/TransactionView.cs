@@ -12,10 +12,10 @@ namespace BudgetBuilder.UserControlViews
         private readonly ObservableCollection<Transaction> _transactions = new ObservableCollection<Transaction>();
         private readonly int selectedMonth;
 
-        public TransactionView(int selectedMonth)
+        public TransactionView(int selectedMonth, ObservableCollection<Transaction> transactions)
         {
             this.selectedMonth = selectedMonth;
-            _transactions = TransactionDataService.Load();
+            _transactions = transactions;
 
             InitializeComponent();
 
@@ -71,7 +71,7 @@ namespace BudgetBuilder.UserControlViews
 
         private void UpdateTransactions()
         {
-            var updatedTransactions = TransactionDataService.Load();
+            var updatedTransactions = TransactionDataService.GetTransactions();
             var transactionsForMonth = updatedTransactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
             dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
         }
