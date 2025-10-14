@@ -50,6 +50,8 @@
             btnAddTransaction = new Button();
             panel3 = new Panel();
             btnEditTransaction = new Button();
+            panel6 = new Panel();
+            deleteBtn = new Button();
             tableLayoutPanel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
@@ -60,6 +62,7 @@
             flowLayoutPanel3.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
+            panel6.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -220,6 +223,7 @@
             // 
             flowLayoutPanel3.Controls.Add(panel2);
             flowLayoutPanel3.Controls.Add(panel3);
+            flowLayoutPanel3.Controls.Add(panel6);
             flowLayoutPanel3.Dock = DockStyle.Fill;
             flowLayoutPanel3.Location = new Point(4, 567);
             flowLayoutPanel3.Name = "flowLayoutPanel3";
@@ -264,6 +268,25 @@
             btnEditTransaction.UseVisualStyleBackColor = true;
             btnEditTransaction.Click += btnEditTransaction_Click;
             // 
+            // panel6
+            // 
+            panel6.Controls.Add(deleteBtn);
+            panel6.Location = new Point(299, 3);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(142, 55);
+            panel6.TabIndex = 2;
+            // 
+            // deleteBtn
+            // 
+            deleteBtn.AutoSize = true;
+            deleteBtn.Location = new Point(21, 13);
+            deleteBtn.Name = "deleteBtn";
+            deleteBtn.Size = new Size(114, 25);
+            deleteBtn.TabIndex = 0;
+            deleteBtn.Text = "Delete Transaction";
+            deleteBtn.UseVisualStyleBackColor = true;
+            deleteBtn.Click += deleteBtn_Click;
+            // 
             // TransactionView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -285,6 +308,8 @@
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -310,5 +335,7 @@
         private Button btnAddTransaction;
         private Panel panel3;
         private Button btnEditTransaction;
+        private Panel panel6;
+        private Button deleteBtn;
     }
 }

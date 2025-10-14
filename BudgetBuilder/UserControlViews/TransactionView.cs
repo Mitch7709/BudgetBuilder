@@ -52,7 +52,7 @@ namespace BudgetBuilder.UserControlViews
             var popUp = new TransactionPopup("Add", transaction);
             popUp.ShowDialog();
 
-            UpdateTransactions();
+            UpdateTransactionGrid();
         }
 
         private void btnEditTransaction_Click(object sender, EventArgs e)
@@ -65,17 +65,27 @@ namespace BudgetBuilder.UserControlViews
             var popUp = new TransactionPopup("Edit", transaction, transactionIndex);
             popUp.ShowDialog();
 
-            UpdateTransactions();
+            UpdateTransactionGrid();
         }
 
 
-        private void UpdateTransactions()
+        private void UpdateTransactionGrid()
         {
             var updatedTransactions = TransactionDataService.GetTransactions();
             var transactionsForMonth = updatedTransactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
             dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
         }
 
+        private void deleteBtn_Click(object sender, EventArgs e)
+        {
+            var transaction = (Transaction)dgvTransactions.CurrentRow?.DataBoundItem;
+            if (transaction == null)
+                return;
 
+            var transactionIndex = _transactions.IndexOf(transaction);
+            TransactionDataService.DeleteTransaction(transactionIndex);
+
+            UpdateTransactionGrid();
+        }
     }
 }

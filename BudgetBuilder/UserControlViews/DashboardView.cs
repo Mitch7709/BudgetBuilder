@@ -6,26 +6,37 @@ namespace BudgetBuilder.UserControlViews
 {
     public partial class DashboardView : UserControl
     {
-        private readonly ObservableCollection<Transaction> _transactions = new ObservableCollection<Transaction>();
+        private readonly ObservableCollection<Transaction> _transactions;
 
-        private readonly double _incomeTotal = 0;
-        private readonly double _expenseTotal = 0;
-        private readonly double _balanceTotal = 0;
+        private double _incomeTotal;
+        private double _expenseTotal;
+        private double _balanceTotal;
+        private int _currentMonth;
 
         public DashboardView(int selectedMonth, ObservableCollection<Transaction> transactions)
         {
-            _transactions = transactions;
-            var transactionsForMonth = _transactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
+            _transactions = transactions; // reference retained (not copied)
+            _currentMonth = selectedMonth;
+
+            InitializeComponent();
+
+            RecalculateAndUpdateLabels();
+        }
+
+
+        public void RecalculateAndUpdateLabels()
+        {
+            var transactionsForMonth = TransactionDataService.GetTransactions()
+                .Where(t => t.Date.Month == _currentMonth);
 
             _incomeTotal = transactionsForMonth.Where(t => t.Type == TransactionType.Income).Sum(t => t.Amount);
             _expenseTotal = transactionsForMonth.Where(t => t.Type == TransactionType.Expense).Sum(t => t.Amount);
             _balanceTotal = _incomeTotal - _expenseTotal;
 
-            InitializeComponent();
-
-            incomelbl.Text = $"Total Income: ${_incomeTotal}";
-            expenselbl.Text = $"Total Expenses: ${_expenseTotal}";
-            balancelbl.Text = $"Balance: ${_balanceTotal}";
+            // Update labels (using currency formatting)
+            incomelbl.Text = $"Total Income: {_incomeTotal:C}";
+            expenselbl.Text = $"Total Expenses: {_expenseTotal:C}";
+            balancelbl.Text = $"Balance: {_balanceTotal:C}";
         }
     }
 }
