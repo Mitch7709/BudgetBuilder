@@ -1,16 +1,17 @@
 ﻿using System.ComponentModel;
+using BudgetBuilder.Enums;
 
-namespace BudgetBuilder.Transactions
+namespace BudgetBuilder.Models
 {
     public class Transaction
     {
         public DateTime Date { get; set; }
         public string Description { get; set; }
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
         public string Category { get; set; }
         public TransactionType Type { get; set; }
 
-        public Transaction(DateTime date, string description, double amount, string category, TransactionType type)
+        public Transaction(DateTime date, string description, decimal amount, string category, TransactionType type)
         {
             Date = date;
             Description = description;
@@ -28,12 +29,6 @@ namespace BudgetBuilder.Transactions
             if (string.IsNullOrWhiteSpace(Category))
                 return "Category cannot be empty.";
             return string.Empty; // No validation errors
-        }
-
-        public enum TransactionType
-        {
-            Income,
-            Expense
         }
     }
 }

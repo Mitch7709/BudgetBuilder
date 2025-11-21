@@ -1,4 +1,6 @@
-﻿using BudgetBuilder.Transactions;
+﻿using BudgetBuilder.Models;
+using BudgetBuilder.DataStorage;
+using BudgetBuilder.Enums;
 
 namespace BudgetBuilder.Popups
 {
@@ -38,9 +40,9 @@ namespace BudgetBuilder.Popups
             var transaction = new Transaction(
                 dateValue.Value,
                 descriptionValue.Text,
-                (double)amountValue.Value,
+                (decimal)amountValue.Value,
                 categoryValue.Text,
-                (Transaction.TransactionType)Enum.Parse(typeof(Transaction.TransactionType), typeValue.Text)
+                (TransactionType)Enum.Parse(typeof(TransactionType), typeValue.Text)
             );
 
             var validationError = transaction.ValidateFields();

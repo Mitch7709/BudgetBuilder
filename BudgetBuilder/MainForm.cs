@@ -1,6 +1,7 @@
-using BudgetBuilder.Transactions;
+using BudgetBuilder.DataStorage;
 using BudgetBuilder.UserControlViews;
 using System.Collections.ObjectModel;
+using BudgetBuilder.Models;
 
 namespace BudgetBuilder
 {

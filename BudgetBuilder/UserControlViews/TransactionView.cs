@@ -1,9 +1,10 @@
 ﻿using BudgetBuilder.Popups;
-using BudgetBuilder.Transactions;
+using BudgetBuilder.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
-using static BudgetBuilder.Transactions.Transaction;
+using BudgetBuilder.DataStorage;
+using BudgetBuilder.Enums;
 
 namespace BudgetBuilder.UserControlViews
 {
@@ -48,7 +49,7 @@ namespace BudgetBuilder.UserControlViews
 
         private void btnAddTransaction_Click(object sender, EventArgs e)
         {
-            var transaction = new Transaction(DateTime.Now, string.Empty, 0.0, string.Empty, TransactionType.Expense);
+            var transaction = new Transaction(DateTime.Now, string.Empty, 0, string.Empty, TransactionType.Expense);
             var popUp = new TransactionPopup("Add", transaction);
             popUp.ShowDialog();
 
@@ -68,14 +69,6 @@ namespace BudgetBuilder.UserControlViews
             UpdateTransactionGrid();
         }
 
-
-        private void UpdateTransactionGrid()
-        {
-            var updatedTransactions = TransactionDataService.GetTransactions();
-            var transactionsForMonth = updatedTransactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
-            dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
-        }
-
         private void deleteBtn_Click(object sender, EventArgs e)
         {
             var transaction = (Transaction)dgvTransactions.CurrentRow?.DataBoundItem;
@@ -86,6 +79,13 @@ namespace BudgetBuilder.UserControlViews
             TransactionDataService.DeleteTransaction(transactionIndex);
 
             UpdateTransactionGrid();
+        }
+
+        private void UpdateTransactionGrid()
+        {
+            var updatedTransactions = TransactionDataService.GetTransactions();
+            var transactionsForMonth = updatedTransactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
+            dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
         }
     }
 }

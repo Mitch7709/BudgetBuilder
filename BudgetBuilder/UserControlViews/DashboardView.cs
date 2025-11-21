@@ -1,6 +1,7 @@
-﻿using BudgetBuilder.Transactions;
+﻿using BudgetBuilder.DataStorage;
+using BudgetBuilder.Enums;
+using BudgetBuilder.Models;
 using System.Collections.ObjectModel;
-using static BudgetBuilder.Transactions.Transaction;
 
 namespace BudgetBuilder.UserControlViews
 {
@@ -8,9 +9,9 @@ namespace BudgetBuilder.UserControlViews
     {
         private readonly ObservableCollection<Transaction> _transactions;
 
-        private double _incomeTotal;
-        private double _expenseTotal;
-        private double _balanceTotal;
+        private decimal _incomeTotal;
+        private decimal _expenseTotal;
+        private decimal _balanceTotal;
         private int _currentMonth;
 
         public DashboardView(int selectedMonth, ObservableCollection<Transaction> transactions)

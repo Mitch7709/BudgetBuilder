@@ -54,7 +54,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(10, 184);
+            label1.Location = new Point(10, 7);
             label1.Name = "label1";
             label1.Size = new Size(43, 15);
             label1.TabIndex = 17;
@@ -64,7 +64,7 @@
             // 
             monthComboBox.FormattingEnabled = true;
             monthComboBox.Items.AddRange(new object[] { "January", "February ", "March ", "April ", "May ", "June ", "July ", "August ", "September", "October", "November", "December" });
-            monthComboBox.Location = new Point(10, 202);
+            monthComboBox.Location = new Point(10, 25);
             monthComboBox.Name = "monthComboBox";
             monthComboBox.Size = new Size(121, 23);
             monthComboBox.TabIndex = 16;
@@ -74,9 +74,9 @@
             // 
             transBtn.Cursor = Cursors.Hand;
             transBtn.FlatStyle = FlatStyle.Flat;
-            transBtn.Location = new Point(-2, 21);
+            transBtn.Location = new Point(10, 119);
             transBtn.Name = "transBtn";
-            transBtn.Size = new Size(146, 23);
+            transBtn.Size = new Size(118, 33);
             transBtn.TabIndex = 15;
             transBtn.Text = "Transactions";
             transBtn.UseVisualStyleBackColor = true;
@@ -86,9 +86,9 @@
             // 
             dashBtn.Cursor = Cursors.Hand;
             dashBtn.FlatStyle = FlatStyle.Flat;
-            dashBtn.Location = new Point(-2, -2);
+            dashBtn.Location = new Point(10, 69);
             dashBtn.Name = "dashBtn";
-            dashBtn.Size = new Size(146, 23);
+            dashBtn.Size = new Size(118, 33);
             dashBtn.TabIndex = 14;
             dashBtn.Text = "Dashboard";
             dashBtn.UseVisualStyleBackColor = true;

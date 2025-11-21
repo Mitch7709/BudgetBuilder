@@ -32,6 +32,7 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             tableLayoutPanel1 = new TableLayoutPanel();
             flowLayoutPanel1 = new FlowLayoutPanel();
+            panel7 = new Panel();
             label1 = new Label();
             flowLayoutPanel2 = new FlowLayoutPanel();
             panel1 = new Panel();
@@ -54,6 +55,7 @@
             deleteBtn = new Button();
             tableLayoutPanel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
+            panel7.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
@@ -70,7 +72,6 @@
             tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 0);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel2, 0, 1);
             tableLayoutPanel1.Controls.Add(panel5, 0, 2);
@@ -83,25 +84,32 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 70F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(762, 629);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // flowLayoutPanel1
             // 
-            flowLayoutPanel1.Controls.Add(label1);
-            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Controls.Add(panel7);
             flowLayoutPanel1.Location = new Point(4, 4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Padding = new Padding(10);
             flowLayoutPanel1.Size = new Size(754, 56);
             flowLayoutPanel1.TabIndex = 0;
             // 
+            // panel7
+            // 
+            panel7.Controls.Add(label1);
+            panel7.Location = new Point(13, 13);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(146, 43);
+            panel7.TabIndex = 0;
+            // 
             // label1
             // 
+            label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(13, 10);
+            label1.Location = new Point(11, 0);
             label1.Name = "label1";
             label1.Size = new Size(123, 25);
             label1.TabIndex = 0;
@@ -296,7 +304,8 @@
             Size = new Size(762, 629);
             tableLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.PerformLayout();
+            panel7.ResumeLayout(false);
+            panel7.PerformLayout();
             flowLayoutPanel2.ResumeLayout(false);
             panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
@@ -316,8 +325,6 @@
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
-        private FlowLayoutPanel flowLayoutPanel1;
-        private Label label1;
         private FlowLayoutPanel flowLayoutPanel2;
         private Panel panel1;
         private ComboBox CategoryComboBox;
@@ -337,5 +344,8 @@
         private Button btnEditTransaction;
         private Panel panel6;
         private Button deleteBtn;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Panel panel7;
+        private Label label1;
     }
 }
