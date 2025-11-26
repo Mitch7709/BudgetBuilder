@@ -20,7 +20,7 @@ namespace BudgetBuilder.UserControlViews
 
             InitializeComponent();
 
-            var categories = TransactionDataService.GetTransactionCategories();
+            var categories = TransactionDataService.GetCategories();
 
             CategoryComboBox.Items.Add("All");
             CategoryComboBox.Items.AddRange(categories.ToArray());

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BudgetBuilder.Models
 {
-    public class AnnualTransactions
+    public class AnnualTransaction
     {
         public string Description { get; set; }
         public decimal Amount { get; set; }
 
-        public AnnualTransactions(string description, decimal amount)
+        public AnnualTransaction(string description, decimal amount)
         {
             Description = description;
             Amount = amount;

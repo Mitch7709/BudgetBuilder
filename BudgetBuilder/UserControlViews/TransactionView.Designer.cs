@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             tableLayoutPanel1 = new TableLayoutPanel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel7 = new Panel();
-            label1 = new Label();
             flowLayoutPanel2 = new FlowLayoutPanel();
             panel1 = new Panel();
             CategoryComboBox = new ComboBox();
@@ -53,6 +52,7 @@
             btnEditTransaction = new Button();
             panel6 = new Panel();
             deleteBtn = new Button();
+            label1 = new Label();
             tableLayoutPanel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
             panel7.SuspendLayout();
@@ -90,6 +90,7 @@
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.Controls.Add(panel7);
+            flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(4, 4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Padding = new Padding(10);
@@ -103,17 +104,6 @@
             panel7.Name = "panel7";
             panel7.Size = new Size(146, 43);
             panel7.TabIndex = 0;
-            // 
-            // label1
-            // 
-            label1.Anchor = AnchorStyles.None;
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(11, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(123, 25);
-            label1.TabIndex = 0;
-            label1.Text = "Transactions";
             // 
             // flowLayoutPanel2
             // 
@@ -173,8 +163,8 @@
             // 
             dgvTransactions.AllowUserToAddRows = false;
             dgvTransactions.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = Color.LightGray;
-            dgvTransactions.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.BackColor = Color.LightGray;
+            dgvTransactions.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             dgvTransactions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvTransactions.Columns.AddRange(new DataGridViewColumn[] { Date, Category, Description, Amount, Type });
             dgvTransactions.Dock = DockStyle.Fill;
@@ -189,9 +179,9 @@
             // Date
             // 
             Date.DataPropertyName = "Date";
-            dataGridViewCellStyle2.Format = "d";
-            dataGridViewCellStyle2.NullValue = null;
-            Date.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Format = "d";
+            dataGridViewCellStyle6.NullValue = null;
+            Date.DefaultCellStyle = dataGridViewCellStyle6;
             Date.HeaderText = "Date";
             Date.Name = "Date";
             Date.ReadOnly = true;
@@ -294,6 +284,17 @@
             deleteBtn.Text = "Delete Transaction";
             deleteBtn.UseVisualStyleBackColor = true;
             deleteBtn.Click += deleteBtn_Click;
+            // 
+            // label1
+            // 
+            label1.Anchor = AnchorStyles.None;
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(11, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(123, 25);
+            label1.TabIndex = 0;
+            label1.Text = "Transactions";
             // 
             // TransactionView
             // 

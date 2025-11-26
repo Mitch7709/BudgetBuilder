@@ -10,7 +10,7 @@ namespace BudgetBuilder
         private enum ViewKind { None, Dashboard, Transaction }
 
         private ViewKind currentView = ViewKind.None;
-        private ObservableCollection<Transaction> transactions = new ObservableCollection<Transaction>();
+        private TotalBudget budget = new();
 
         // Cached views + their month context
         private DashboardView? dashboardView;
@@ -24,7 +24,7 @@ namespace BudgetBuilder
             InitializeComponent();
 
             monthComboBox.SelectedIndex = DateTime.Now.Month - 1;
-            transactions = TransactionDataService.Load();
+            budget = TransactionDataService.Load();
 
             ShowDashboard();
         }
@@ -37,13 +37,11 @@ namespace BudgetBuilder
 
         private void dashBtn_Click(object sender, EventArgs e)
         {
-            transactions = TransactionDataService.GetTransactions();
             ShowDashboard();
         }
 
         private void transBtn_Click(object sender, EventArgs e)
         {
-            transactions = TransactionDataService.GetTransactions();
             ShowTransactions();
         }
 
@@ -71,7 +69,7 @@ namespace BudgetBuilder
             // Ensure a dashboard view exists with the correct month context
             if (dashboardView is null || dashboardViewMonth != month)
             {
-                var newView = new DashboardView(month, transactions)
+                var newView = new DashboardView(month, budget.Transactions)
                 {
                     Dock = DockStyle.Fill,
                     Visible = false
@@ -114,7 +112,7 @@ namespace BudgetBuilder
             // Ensure a transaction view exists with the correct month context
             if (transactionView is null || transactionViewMonth != month)
             {
-                var newView = new TransactionView(month, transactions)
+                var newView = new TransactionView(month, budget.Transactions)
                 {
                     Dock = DockStyle.Fill,
                     Visible = false

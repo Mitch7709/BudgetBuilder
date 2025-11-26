@@ -16,7 +16,7 @@ namespace BudgetBuilder.Popups
             _action = action;
             _transactionIndex = transactionIndex;
 
-            var categories = TransactionDataService.GetTransactionCategories();
+            var categories = TransactionDataService.GetCategories();
             categoryValue.Items.AddRange(categories.ToArray());
 
             amountValue.Value = (decimal)transaction.Amount;

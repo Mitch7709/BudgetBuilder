@@ -7,8 +7,8 @@ namespace BudgetBuilder.DataStorage
 {
     public static class TransactionDataService
     {
-        private static readonly string transactionPath =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BudgetBuilder", "transactions.json");
+        private static readonly string budgetPath =
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BudgetBuilder", "budget.json");
 
         private static readonly JsonSerializerOptions _jsonOptions = new()
         {
@@ -19,7 +19,7 @@ namespace BudgetBuilder.DataStorage
         };
 
         // Single, global, live collection for the entire app
-        private static readonly ObservableCollection<Transaction> _transactions = new();
+        private static readonly TotalBudget _totalBudget = new();
 
         // Prevent accidental re-loads overwriting in-memory changes
         private static bool _isLoaded;
@@ -27,36 +27,44 @@ namespace BudgetBuilder.DataStorage
         #region File Operations
         public static void Save()
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(transactionPath)!);
+            Directory.CreateDirectory(Path.GetDirectoryName(budgetPath)!);
 
             // Write to a temp file and move over the original to reduce corruption risk
-            var tempPath = transactionPath + ".tmp";
+            var tempPath = budgetPath + ".tmp";
             using (var fs = File.Create(tempPath))
             {
-                JsonSerializer.Serialize(fs, _transactions, _jsonOptions);
+                JsonSerializer.Serialize(fs, _totalBudget, _jsonOptions);
                 fs.Flush(true);
             }
 
-            File.Move(tempPath, transactionPath, overwrite: true);
+            File.Move(tempPath, budgetPath, overwrite: true);
         }
 
         // Loads once and returns the live collection reference
-        public static ObservableCollection<Transaction> Load()
+        public static TotalBudget Load()
         {
             if (_isLoaded)
-                return _transactions;
+                return _totalBudget;
 
             try
             {
-                if (File.Exists(transactionPath))
+                if (File.Exists(budgetPath))
                 {
-                    using var fs = File.OpenRead(transactionPath);
-                    var items = JsonSerializer.Deserialize<List<Transaction>>(fs, _jsonOptions);
+                    using var fs = File.OpenRead(budgetPath);
+                    var items = JsonSerializer.Deserialize<TotalBudget>(fs, _jsonOptions);
                     if (items is not null)
                     {
-                        _transactions.Clear();
-                        foreach (var t in items)
-                            _transactions.Add(t);
+                        _totalBudget.Transactions.Clear();
+                        foreach (var t in items.Transactions)
+                            _totalBudget.Transactions.Add(t);
+
+                        _totalBudget.Estimates.Clear();
+                        foreach (var e in items.Estimates)
+                            _totalBudget.Estimates.Add(e);
+
+                        _totalBudget.AnnualTransactions.Clear();
+                        foreach (var a in items.AnnualTransactions)
+                            _totalBudget.AnnualTransactions.Add(a);
                     }
                 }
                 _isLoaded = true;
@@ -64,21 +72,37 @@ namespace BudgetBuilder.DataStorage
             catch (Exception)
             {
                 // Swallow or log as appropriate; start with an empty collection on error
-                _transactions.Clear();
+                _totalBudget.Transactions.Clear();
+                _totalBudget.Estimates.Clear();
+                _totalBudget.AnnualTransactions.Clear();
                 _isLoaded = true;
             }
 
-            return _transactions;
+            return _totalBudget;
+        }
+
+        public static void ClearData()
+        {
+            _totalBudget.Transactions.Clear();
+            _totalBudget.Estimates.Clear();
+            _totalBudget.AnnualTransactions.Clear();
+
+            if (File.Exists(budgetPath))
+            {
+                File.Delete(budgetPath);
+            }
         }
         #endregion
 
-        public static ObservableCollection<Transaction> GetTransactions() => _transactions;
-
-        public static ObservableCollection<string> GetTransactionCategories()
+        public static ObservableCollection<Transaction> GetTransactions()
         {
-            var categories = _transactions
-                .Select(t => t.Category)
-                .Where(c => !string.IsNullOrWhiteSpace(c))
+            return _totalBudget.Transactions;
+        }
+
+        public static ObservableCollection<string> GetCategories()
+        {
+            var categories = _totalBudget.Estimates
+                .Select(e => e.Name)
                 .Distinct()
                 .OrderBy(c => c)
                 .ToList();
@@ -86,18 +110,52 @@ namespace BudgetBuilder.DataStorage
             return new ObservableCollection<string>(categories);
         }
 
-        public static void AddTransaction(Transaction transaction) => _transactions.Add(transaction);
+        #region Transaction Operations
+
+        public static void AddTransaction(Transaction transaction) => _totalBudget.Transactions.Add(transaction);
 
         public static void UpdateTransaction(int index, Transaction updatedTransaction)
         {
-            if (index >= 0 && index < _transactions.Count)
-                _transactions[index] = updatedTransaction;
+            if (index >= 0 && index < _totalBudget.Transactions.Count)
+                _totalBudget.Transactions[index] = updatedTransaction;
         }
 
         public static void DeleteTransaction(int index)
         {
-            if (index >= 0 && index < _transactions.Count)
-                _transactions.RemoveAt(index);
+            if (index >= 0 && index < _totalBudget.Transactions.Count)
+                _totalBudget.Transactions.RemoveAt(index);
         }
+
+        #endregion
+
+        #region Estimate Operations
+        public static void AddEstimate(Estimate estimate) => _totalBudget.Estimates.Add(estimate);
+
+        public static void UpdateEstimate(int index, Estimate updatedEstimate)
+        {
+            if (index >= 0 && index < _totalBudget.Estimates.Count)
+                _totalBudget.Estimates[index] = updatedEstimate;
+        }
+        public static void DeleteEstimate(int index)
+        {
+            if (index >= 0 && index < _totalBudget.Estimates.Count)
+                _totalBudget.Estimates.RemoveAt(index);
+        }
+        #endregion
+
+        #region Annual Transaction Operations
+        public static void AddAnnualTransaction(AnnualTransaction annualTransaction) => _totalBudget.AnnualTransactions.Add(annualTransaction);
+
+        public static void UpdateAnnualTransaction(int index, AnnualTransaction updatedAnnualTransaction)
+        {
+            if (index >= 0 && index < _totalBudget.AnnualTransactions.Count)
+                _totalBudget.AnnualTransactions[index] = updatedAnnualTransaction;
+        }
+        public static void DeleteAnnualTransaction(int index)
+        {
+            if (index >= 0 && index < _totalBudget.AnnualTransactions.Count)
+                _totalBudget.AnnualTransactions.RemoveAt(index);
+        }
+        #endregion
     }
 }
