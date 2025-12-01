@@ -131,15 +131,11 @@ namespace BudgetBuilder.DataStorage
         #region Estimate Operations
         public static void AddEstimate(Estimate estimate) => _totalBudget.Estimates.Add(estimate);
 
-        public static void UpdateEstimate(int index, Estimate updatedEstimate)
+        public static void DeleteEstimate(int id)
         {
-            if (index >= 0 && index < _totalBudget.Estimates.Count)
-                _totalBudget.Estimates[index] = updatedEstimate;
-        }
-        public static void DeleteEstimate(int index)
-        {
-            if (index >= 0 && index < _totalBudget.Estimates.Count)
-                _totalBudget.Estimates.RemoveAt(index);
+            var estimate = _totalBudget.Estimates.FirstOrDefault(e => e.Id == id);
+            if (estimate != null)
+                _totalBudget.Estimates.Remove(estimate);
         }
         #endregion
 

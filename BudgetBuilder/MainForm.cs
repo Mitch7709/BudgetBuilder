@@ -166,7 +166,7 @@ namespace BudgetBuilder
             // Ensure an estimate view exists with the correct month context
             if (estimateView is null)
             {
-                var newView = new EstimateView()
+                var newView = new EstimateView(budget.Estimates)
                 {
                     Dock = DockStyle.Fill,
                     Visible = false
