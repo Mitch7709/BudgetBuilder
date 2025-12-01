@@ -8,11 +8,13 @@ namespace BudgetBuilder.Models
 {
     public class Estimate
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public decimal Amount { get; set; }
 
-        public Estimate(string name, decimal amount)
+        public Estimate(int id, string name, decimal amount)
         {
+            Id = id;
             Name = name;
             Amount = amount;
         }

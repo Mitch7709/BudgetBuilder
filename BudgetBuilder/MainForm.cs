@@ -7,7 +7,11 @@ namespace BudgetBuilder
 {
     public partial class MainForm : Form
     {
-        private enum ViewKind { None, Dashboard, Transaction }
+        private enum ViewKind
+        {
+            None, Dashboard, Transaction,
+            Estimate
+        }
 
         private ViewKind currentView = ViewKind.None;
         private TotalBudget budget = new();
@@ -18,6 +22,8 @@ namespace BudgetBuilder
 
         private TransactionView? transactionView;
         private int transactionViewMonth = -1;
+
+        private EstimateView? estimateView;
 
         public MainForm()
         {
@@ -45,6 +51,11 @@ namespace BudgetBuilder
             ShowTransactions();
         }
 
+        private void estBtn_Click(object sender, EventArgs e)
+        {
+            ShowEstimates();
+        }
+
         private void monthComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (currentView)
@@ -54,6 +65,9 @@ namespace BudgetBuilder
                     break;
                 case ViewKind.Transaction:
                     ShowTransactions();
+                    break;
+                case ViewKind.Estimate:
+                    ShowEstimates();
                     break;
                 default:
                     break;
@@ -94,6 +108,8 @@ namespace BudgetBuilder
             // Hide the other view (if present) and bring the dashboard to front
             if (transactionView is not null)
                 transactionView.Visible = false;
+            if (estimateView is not null)
+                estimateView.Visible = false;
 
             dashboardView.Visible = true;
             dashboardView.BringToFront();
@@ -132,12 +148,45 @@ namespace BudgetBuilder
             // Hide the other view (if present) and bring the transactions to front
             if (dashboardView is not null)
                 dashboardView.Visible = false;
+            if (estimateView is not null)
+                estimateView.Visible = false;
 
             transactionView.Visible = true;
             transactionView.BringToFront();
 
             currentView = ViewKind.Transaction;
 
+            mainPanel.ResumeLayout(performLayout: false);
+        }
+
+        private void ShowEstimates()
+        {
+            var month = monthComboBox.SelectedIndex + 1;
+            mainPanel.SuspendLayout();
+            // Ensure an estimate view exists with the correct month context
+            if (estimateView is null)
+            {
+                var newView = new EstimateView()
+                {
+                    Dock = DockStyle.Fill,
+                    Visible = false
+                };
+                if (estimateView is not null)
+                {
+                    mainPanel.Controls.Remove(estimateView);
+                    estimateView.Dispose();
+                }
+                estimateView = newView;
+                mainPanel.Controls.Add(estimateView);
+            }
+            // Hide the other views (if present) and bring the estimates to front
+            if (dashboardView is not null)
+                dashboardView.Visible = false;
+            if (transactionView is not null)
+                transactionView.Visible = false;
+            estimateView.Visible = true;
+            estimateView.BringToFront();
+            currentView = ViewKind.Estimate;
             mainPanel.ResumeLayout(performLayout: false);
         }
     }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             sideBar = new Panel();
+            estBtn = new Button();
             label1 = new Label();
             monthComboBox = new ComboBox();
             transBtn = new Button();
@@ -41,6 +42,7 @@
             // 
             sideBar.BackColor = Color.LightGray;
             sideBar.BorderStyle = BorderStyle.Fixed3D;
+            sideBar.Controls.Add(estBtn);
             sideBar.Controls.Add(label1);
             sideBar.Controls.Add(monthComboBox);
             sideBar.Controls.Add(transBtn);
@@ -50,6 +52,18 @@
             sideBar.Name = "sideBar";
             sideBar.Size = new Size(144, 629);
             sideBar.TabIndex = 13;
+            // 
+            // estBtn
+            // 
+            estBtn.Cursor = Cursors.Hand;
+            estBtn.FlatStyle = FlatStyle.Flat;
+            estBtn.Location = new Point(10, 117);
+            estBtn.Name = "estBtn";
+            estBtn.Size = new Size(118, 33);
+            estBtn.TabIndex = 18;
+            estBtn.Text = "Estimates";
+            estBtn.UseVisualStyleBackColor = true;
+            estBtn.Click += estBtn_Click;
             // 
             // label1
             // 
@@ -74,7 +88,7 @@
             // 
             transBtn.Cursor = Cursors.Hand;
             transBtn.FlatStyle = FlatStyle.Flat;
-            transBtn.Location = new Point(10, 119);
+            transBtn.Location = new Point(10, 165);
             transBtn.Name = "transBtn";
             transBtn.Size = new Size(118, 33);
             transBtn.TabIndex = 15;
@@ -125,5 +139,6 @@
         private Button transBtn;
         private Label label1;
         private ComboBox monthComboBox;
+        private Button estBtn;
     }
 }
