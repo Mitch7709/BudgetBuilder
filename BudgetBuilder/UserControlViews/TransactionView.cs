@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using BudgetBuilder.DataStorage;
 using BudgetBuilder.Enums;
+using System.Collections.Specialized;
 
 namespace BudgetBuilder.UserControlViews
 {
@@ -20,13 +21,83 @@ namespace BudgetBuilder.UserControlViews
 
             InitializeComponent();
 
-            var categories = TransactionDataService.GetCategories();
+            // Initial population
+            RefreshCategories();
 
-            CategoryComboBox.Items.Add("All");
-            CategoryComboBox.Items.AddRange(categories.ToArray());
-
+            // Bind initial grid
             var transactionsForMonth = _transactions.Where(t => t.Date.Month == selectedMonth && t.Date.Year == DateTime.Now.Year).ToList();
             dgvTransactions.DataSource = new BindingList<Transaction>(transactionsForMonth);
+
+            // Subscribe to live Estimates changes so categories stay in sync
+            var estimates = TransactionDataService.GetEstimates();
+            estimates.CollectionChanged += Estimates_CollectionChanged;
+
+            // Subscribe to property changes for existing items (e.g., Name edits)
+            foreach (var est in estimates)
+            {
+                // Estimate implements INotifyPropertyChanged after our change
+                if (est is INotifyPropertyChanged npc)
+                    npc.PropertyChanged += Estimate_PropertyChanged;
+            }
+        }
+
+        private void Estimates_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            // Add handlers to new items
+            if (e.NewItems is not null)
+            {
+                foreach (var item in e.NewItems)
+                {
+                    if (item is INotifyPropertyChanged npc)
+                        npc.PropertyChanged += Estimate_PropertyChanged;
+                }
+            }
+
+            // Remove handlers from old items
+            if (e.OldItems is not null)
+            {
+                foreach (var item in e.OldItems)
+                {
+                    if (item is INotifyPropertyChanged npc)
+                        npc.PropertyChanged -= Estimate_PropertyChanged;
+                }
+            }
+
+            // Update categories after add/remove
+            RefreshCategories();
+        }
+
+        private void Estimate_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            // If the name changed, categories list needs updating
+            if (e.PropertyName == nameof(Estimate.Name))
+            {
+                RefreshCategories();
+            }
+        }
+
+        private void RefreshCategories()
+        {
+            var selected = CategoryComboBox.SelectedItem?.ToString();
+
+            var categories = TransactionDataService.GetCategories();
+
+            CategoryComboBox.BeginUpdate();
+            CategoryComboBox.Items.Clear();
+            CategoryComboBox.Items.Add("All");
+            CategoryComboBox.Items.AddRange(categories.ToArray());
+            CategoryComboBox.EndUpdate();
+
+            // Restore selection if possible
+            if (!string.IsNullOrWhiteSpace(selected))
+            {
+                var index = CategoryComboBox.Items.IndexOf(selected);
+                CategoryComboBox.SelectedIndex = index >= 0 ? index : 0; // default to "All"
+            }
+            else
+            {
+                CategoryComboBox.SelectedIndex = 0; // "All"
+            }
         }
 
         private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)

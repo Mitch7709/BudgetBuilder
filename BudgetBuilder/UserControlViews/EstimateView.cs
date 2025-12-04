@@ -117,21 +117,6 @@ namespace BudgetBuilder.UserControlViews
                 int id = est.Id;
                 TransactionDataService.DeleteEstimate(id);
 
-                // Remove from in-memory collection by id
-                //int indexToRemove = -1;
-                //for (int i = 0; i < _estimates.Count; i++)
-                //{
-                //    if (_estimates[i].Id == id)
-                //    {
-                //        indexToRemove = i;
-                //        break;
-                //    }
-                //}
-                //if (indexToRemove >= 0)
-                //{
-                //    _estimates.RemoveAt(indexToRemove);
-                //}
-
                 // Remove associated panel
                 foreach (Control c in EstimateLayoutPanel.Controls)
                 {

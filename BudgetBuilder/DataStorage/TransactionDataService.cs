@@ -110,6 +110,11 @@ namespace BudgetBuilder.DataStorage
             return new ObservableCollection<string>(categories);
         }
 
+        public static ObservableCollection<Estimate> GetEstimates()
+        {
+            return _totalBudget.Estimates;
+        }
+
         #region Transaction Operations
 
         public static void AddTransaction(Transaction transaction) => _totalBudget.Transactions.Add(transaction);
